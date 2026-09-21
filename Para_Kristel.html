@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Kristel 💛</title>
+  <style>
+    :root {
+      --ink: #43351f;
+      --gold: #e9ad12;
+      --sun: #ffd84a;
+      --leaf: #6e9b45;
+      --paper: #fffdf5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background: #f8eab8;
+      color: var(--ink);
+      font-family: Georgia, 'Times New Roman', serif;
+      text-align: center;
+    }
+
+    .welcome {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+
+    .welcome.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, #fffced 0 4%, transparent 35%), linear-gradient(150deg, #f6d976, #fff7d5 52%, #e8d48e);
+      z-index: -1;
+    }
+
+    .card {
+      width: min(100%, 410px);
+      padding: 42px 34px 38px;
+      border: 1px solid rgba(154, 110, 18, .2);
+      border-radius: 28px 28px 12px 12px;
+      background: rgba(255, 253, 245, .9);
+      box-shadow: 0 22px 55px rgba(111, 78, 9, .18);
+      animation: cardReveal 900ms cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: #b77e08;
+      font-size: clamp(2rem, 8vw, 2.7rem);
+      line-height: 1;
+    }
+
+    p {
+      margin: 0 auto 26px;
+      max-width: 310px;
+      color: #746346;
+      font-size: 1.08rem;
+      line-height: 1.5;
+    }
+
+    .name-form {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    label {
+      padding-left: 4px;
+      color: #957532;
+      font-size: .88rem;
+      letter-spacing: .04em;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid #ddc579;
+      border-radius: 12px;
+      padding: 14px 15px;
+      outline: none;
+      background: #fffef9;
+      color: var(--ink);
+      font: inherit;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(233, 173, 18, .15);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: var(--gold);
+      color: #fffdf1;
+      font: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(184, 132, 11, .22);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .btn:hover {
+      background: #d89308;
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(.98);
+    }
+
+    .error {
+      min-height: 1.3em;
+      margin: 9px 0 0;
+      color: #b24c32;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: .82rem;
+    }
+
+    .garden {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0;
+      background: linear-gradient(180deg, #fff8d5 0%, #ffefad 58%, #e2cf8b 100%);
+      transition: opacity 1s ease;
+    }
+
+    .garden.is-visible { opacity: 1; }
+
+    .garden::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 39%;
+      background: radial-gradient(circle at 72% 25%, rgba(255,255,255,.8), transparent 20%), linear-gradient(180deg, #fff9dc, #ffefad);
+    }
+
+    .garden::after {
+      content: '';
+      position: absolute;
+      right: -3%;
+      bottom: -2%;
+      left: -3%;
+      height: 43%;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 12% 26%, rgba(117, 91, 42, .22) 0 1px, transparent 2px),
+        radial-gradient(ellipse at 72% 62%, rgba(117, 91, 42, .18) 0 1px, transparent 2px),
+        radial-gradient(ellipse at 40% 78%, rgba(255, 236, 156, .22) 0 2px, transparent 3px),
+        linear-gradient(165deg, #c8b46a, #d8c57d 45%, #bba65b);
+      background-size: 85px 53px, 110px 74px, 130px 90px, auto;
+      clip-path: polygon(0 13%, 8% 9%, 17% 14%, 27% 7%, 37% 12%, 47% 6%, 59% 12%, 69% 8%, 81% 14%, 91% 7%, 100% 12%, 100% 100%, 0 100%);
+      box-shadow: inset 0 10px 18px rgba(113, 87, 34, .12);
+    }
+
+    .message {
+      position: absolute;
+      top: 10vh;
+      right: 7vw;
+      left: 7vw;
+      z-index: 2;
+      color: #a9780e;
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 1.4s ease 2.2s, transform 1.4s ease 2.2s;
+    }
+
+    .garden.is-visible .message {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .flower {
+      position: absolute;
+      bottom: 34%;
+      left: var(--left);
+      width: 5px;
+      height: var(--height);
+      z-index: 1;
+      transform-origin: bottom;
+      animation: stemGrow .9s cubic-bezier(.22, 1, .36, 1) var(--delay) both;
+    }
+
+    .stem {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      background: var(--leaf);
+    }
+
+    .flower::before,
+    .flower::after {
+      content: '';
+      position: absolute;
+      bottom: var(--leaf-height);
+      width: 25px;
+      height: 11px;
+      border-radius: 100% 0 100% 0;
+      background: var(--leaf);
+      transform-origin: 0 50%;
+      animation: leafOpen .6s ease var(--leaf-delay) both;
+    }
+
+    .flower::before { left: 3px; transform: rotate(28deg) scale(0); }
+    .flower::after { right: 3px; transform: rotate(152deg) scale(0); }
+
+    .head {
+      position: absolute;
+      top: calc(var(--flower-size) * -0.65);
+      left: calc(var(--flower-size) / 2 * -1 + 2px);
+      width: var(--flower-size);
+      height: var(--flower-size);
+      border-radius: 50%;
+      filter: drop-shadow(0 4px 2px rgba(124, 88, 13, .15));
+      transform: scale(0);
+      animation: flowerOpen .9s cubic-bezier(.16, 1, .3, 1) var(--bloom-delay) both;
+    }
+
+    .petal {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: calc(var(--flower-size) * .34);
+      height: calc(var(--flower-size) * .7);
+      border-radius: 52% 52% 42% 42%;
+      background: linear-gradient(90deg, #e9a80b, #ffd84a 48%, #f5b91c);
+      transform-origin: 50% 100%;
+      transform: translate(-50%, -100%) rotate(var(--angle)) scaleY(var(--petal-scale));
+    }
+
+    .center {
+      position: absolute;
+      inset: 29%;
+      z-index: 1;
+      border: 2px solid #7c4e0d;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 32%, #c98a1a 0 8%, transparent 9%), radial-gradient(circle, #6e420d 0 48%, #8e5b12 49% 100%);
+      box-shadow: inset 1px 2px 2px rgba(255, 214, 75, .3);
+    }
+
+    @keyframes stemGrow {
+      0% {
+        transform: scaleY(0);
+      }
+      100% { transform: scaleY(1); }
+    }
+
+    @keyframes leafOpen {
+      to { transform: rotate(28deg) scale(1); }
+    }
+
+    @keyframes flowerOpen {
+      0% { transform: scale(0) rotate(-30deg); }
+      70% { transform: scale(1.1) rotate(8deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(24px) scale(.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .flower { bottom: 28%; }
+      .message { top: 7vh; }
+    }
+  </style>
+</head>
+<body>
+  <main class="welcome" id="welcome">
+    <section class="card" aria-labelledby="welcome-title">
+      <h1 id="welcome-title">Hola, bonita 🌻</h1>
+      <p>Hay un pequeño jardín esperándote. Escribe tu nombre para abrirlo.</p>
+      <form class="name-form" id="name-form">
+        <label for="name">Tu nombre</label>
+        <input id="name" name="name" type="text" autocomplete="off" placeholder="Kristel o Morenita" required>
+        <button class="btn" type="submit">Entrar al jardín</button>
+        <div class="error" id="error" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <section class="garden" id="garden" aria-label="Jardín de flores amarillas">
+    <div class="message">Para ti, Kristel. 💛</div>
+  </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('name-form');
+    const nameInput = document.getElementById('name');
+    const error = document.getElementById('error');
+    const welcome = document.getElementById('welcome');
+    const garden = document.getElementById('garden');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = nameInput.value
+        .replace(/\u00a0/g, ' ')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+      if (name !== 'kristel' && name !== 'morenita') {
+        error.textContent = 'Escribe Kristel o Morenita para entrar.';
+        nameInput.focus();
+        return;
+      }
+
+      error.textContent = '';
+      welcome.classList.add('is-hidden');
+      garden.classList.add('is-visible');
+      growGarden();
+    });
+
+    function growGarden() {
+      const flowerCount = window.innerWidth < 600 ? 16 : 28;
+      for (let index = 0; index < flowerCount; index += 1) {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        const height = 90 + Math.random() * 145;
+        const delay = 0.25 + index * 0.1 + Math.random() * 0.2;
+        const spacing = 90 / (flowerCount - 1);
+        const left = 5 + index * spacing + (Math.random() * 5 - 2.5);
+        flower.style.setProperty('--left', `${left}%`);
+        flower.style.setProperty('--height', `${height}px`);
+        flower.style.setProperty('--flower-size', `${24 + Math.random() * 17}px`);
+        flower.style.setProperty('--leaf-height', `${height * (0.32 + Math.random() * 0.15)}px`);
+        flower.style.setProperty('--delay', `${delay}s`);
+        flower.style.setProperty('--leaf-delay', `${delay + .55}s`);
+        flower.style.setProperty('--bloom-delay', `${delay + .8}s`);
+        const petals = Array.from({ length: 12 }, (_, petalIndex) => {
+          const angle = petalIndex * 30 + (Math.random() * 8 - 4);
+          const scale = (0.86 + Math.random() * 0.2).toFixed(2);
+          return `<span class="petal" style="--angle:${angle}deg;--petal-scale:${scale}"></span>`;
+        }).join('');
+        flower.innerHTML = `<span class="stem"></span><span class="head">${petals}<span class="center"></span></span>`;
+        garden.appendChild(flower);
+      }
+    }
+  </script>
+</body>
+</html>
